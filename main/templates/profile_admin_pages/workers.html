@@ -1,0 +1,154 @@
+{% extends 'base-profile.html' %} 
+
+{% block main-content %}
+
+<main class="h-full pb-16 overflow-y-auto">
+    
+    <div class="container px-6 mx-auto grid">
+      <h2
+        class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
+      >
+        Працівники
+      </h2>
+
+
+
+      
+      <div class="w-full overflow-hidden rounded-lg shadow-xs">
+        <div class="w-full overflow-x-auto">
+          <table class="w-full whitespace-no-wrap">
+            <thead>
+              <tr
+                class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+                <th class="px-4 py-3">Працівник</th>
+                <th class="px-4 py-3">Email</th>
+                <th class="px-4 py-3">Має кімнати</th>
+                <th class="px-4 py-3">Кімнати</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+
+              {% for customer in users %}
+              <tr class="text-gray-700 dark:text-gray-400">
+                <td class="px-4 py-3">
+                  <div class="flex items-center text-sm">
+                    
+                    <div>
+                      <p class="font-semibold">
+                        {{ customer.first_name }}
+                        {{ customer.last_name }}
+                        {{ customer.middle_name }}</p>
+                      <p class="text-xs text-gray-600 dark:text-gray-400">
+                        {{ customer.username }}
+                      </p>
+                      
+                    </div>
+                  </div>
+                </td>
+                <td class="px-4 py-3 text-sm">
+                  {{ customer.email }}
+                </td>
+                <td class="px-4 py-3 text-xs">
+                  {% if customer.rooms_as_staff.all %}
+                  <span
+                    class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+                    Має кімнати
+                  </span>
+                  {% else %}
+                  <span
+                        class="px-2 py-1 font-semibold leading-tight text-red-700 bg-red-100 rounded-full dark:text-red-100 dark:bg-red-700">
+                        Прив'язані кімнати відсутні
+                      </span>
+
+                  {% endif %}
+                </td>
+                <td class="px-4 py-3 flex flex-row flex-wrap">
+                  <div class="flex items-center space-x-4 text-sm">
+                    {% if customer.rooms_as_staff.all %}
+                    {% for room in customer.rooms_as_staff.all %}
+                      <a
+                        class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                        aria-label="Show"
+                        href="{% url 'admin_rooms' %}?room_no={{ room.room_no }}"
+                        >
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                          <path fill-rule="evenodd" d="M15.75 2.25H21a.75.75 0 01.75.75v5.25a.75.75 0 01-1.5 0V4.81L8.03 17.03a.75.75 0 01-1.06-1.06L19.19 3.75h-3.44a.75.75 0 010-1.5zm-10.5 4.5a1.5 1.5 0 00-1.5 1.5v10.5a1.5 1.5 0 001.5 1.5h10.5a1.5 1.5 0 001.5-1.5V10.5a.75.75 0 011.5 0v8.25a3 3 0 01-3 3H5.25a3 3 0 01-3-3V8.25a3 3 0 013-3h8.25a.75.75 0 010 1.5H5.25z" clip-rule="evenodd" />
+                        </svg>
+                        &nbsp;
+                        Переглянути {{ room.room_no }}
+                      </a>
+                    {% endfor %}
+                    {% else %}
+                    <button
+                      class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-purple-600 rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+                      aria-label="Show">
+                      Прив'язаних кімнат немає
+                    </button>
+                    {% endif %}
+                  </div>
+                </td>
+              </tr>
+              {% endfor %}
+
+              
+            </tbody>
+          </table>
+        </div>
+        <div
+          class="grid px-4 py-3 text-xs font-semibold tracking-wide text-gray-500 uppercase border-t dark:border-gray-700 bg-gray-50 sm:grid-cols-9 dark:text-gray-400 dark:bg-gray-800">
+          <span class="flex items-center col-span-3">
+            Показано {{ showing_pages }} із {{ all_count_page }}
+          </span>
+          <span class="col-span-2"></span>
+          <!-- Pagination -->
+          <span class="flex col-span-4 mt-2 sm:mt-auto sm:justify-end">
+            <nav aria-label="Table navigation">
+              <ul class="inline-flex items-center">
+                {% if previous_page %}
+                    <li>
+                        <a href="?page={{ previous_page }}&step={{ step }}" class="px-3 py-1 rounded-md rounded-l-lg focus:outline-none focus:shadow-outline-purple"
+                            aria-label="Previous">
+                            <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
+                                <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                    clip-rule="evenodd" fill-rule="evenodd"></path>
+                            </svg>
+                        </a>
+                    </li>
+                {% endif %}
+                
+                {% for page_number in users.paginator.page_range %}
+                    <li>
+                        <a href="?page={{ page_number }}&step={{ step }}" class="px-3 py-1 rounded-md focus:outline-none focus:shadow-outline-purple">
+                            {{ page_number }}
+                        </a>
+                    </li>
+                {% endfor %}
+                
+                {% if next_page %}
+                    <li>
+                        <a href="?page={{ next_page }}&step={{ step }}" class="px-3 py-1 rounded-md rounded-r-lg focus:outline-none focus:shadow-outline-purple"
+                            aria-label="Next">
+                            <svg class="w-4 h-4 fill-current" aria-hidden="true" viewBox="0 0 20 20">
+                                <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                    clip-rule="evenodd" fill-rule="evenodd"></path>
+                            </svg>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+            
+            </nav>
+          </span>
+        </div>
+      </div>
+
+
+
+
+
+
+
+    </div>
+  </main>
+
+{% endblock %}

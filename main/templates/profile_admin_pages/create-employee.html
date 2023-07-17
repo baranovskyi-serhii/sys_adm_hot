@@ -1,0 +1,201 @@
+{% extends 'base-profile.html' %} 
+
+{% block main-content %}
+
+<main class="h-full pb-16 overflow-y-auto">
+    
+    <div class="container px-6 mx-auto grid">
+      <h2
+        class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
+      >
+        Створити користувача
+      </h2>
+
+
+      {% load static %}
+<!DOCTYPE html>
+<html :class="{ 'theme-dark': dark }" x-data="data()" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Создать пользователя</title>
+    <link href="{% static 'css/tailwind.css' %}" rel="stylesheet" />
+    <script
+      src="{% static 'js/alpine.min.js' %}"
+      defer
+    ></script>
+    <script src="{% static 'js/init-alpine.js' %}"></script>
+  </head>
+  <body>
+    <div class="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
+      <div
+        class="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800"
+      >
+        <div class="flex flex-col overflow-y-auto md:flex-row">
+
+          
+          <div class="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
+
+            <div class="w-full">
+              
+              {% if messages %}
+                <ul class="messages">
+                  {% for message in messages %}
+                    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                  {% endfor %}
+                </ul>
+              {% endif %}
+
+              {% if form.errors %}
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                  <strong class="font-bold">Oops!</strong>
+                  <span class="block sm:inline">Please fix the following errors:</span>
+                  <ul class="mt-2">
+                    {% for field in form %}
+                      {% if field.errors %}
+                        <li class="text-sm">{{ field.label }}:</li>
+                        <ul class="ml-4">
+                          {% for error in field.errors %}
+                            <li class="text-sm">{{ error }}</li>
+                          {% endfor %}
+                        </ul>
+                      {% endif %}
+                    {% endfor %}
+                  </ul>
+                </div>
+              {% endif %}
+
+
+              <form method="POST" action="{% url 'admin_create_employee' %}">
+
+              {% csrf_token %}
+              
+
+              <label class="block text-sm">
+                <span class="text-gray-700 dark:text-gray-400">Юзернейм</span>
+                <input
+                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                  type="text"
+                  name="username"
+                  placeholder="Юзернейм"
+                />
+              </label>
+
+              <label class="block text-sm">
+                <span class="text-gray-700 dark:text-gray-400">Емейл</span>
+                <input
+                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                  type="email"
+                  name="email"
+                  placeholder="Емейл"
+                />
+              </label>
+
+              <label class="block text-sm">
+                <span class="text-gray-700 dark:text-gray-400">Пароль</span>
+                <input
+                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                  type="password"
+                  name="password1"
+                  id="id_password1"
+                  placeholder="Пароль"
+                />
+              </label>
+              
+              <label class="block text-sm">
+                <span class="text-gray-700 dark:text-gray-400">Повторити пароль</span>
+                <input
+                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                  type="password"
+                  name="password2"
+                  id="id_password2"
+                  placeholder="Повторити пароль"
+                />
+              </label>
+
+              <label class="block text-sm">
+                <span class="text-gray-700 dark:text-gray-400">Ім'я</span>
+                <input
+                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                  type="text"
+                  name="first_name"
+                  placeholder="Ім'я"
+                />
+              </label>
+
+              <label class="block text-sm">
+                <span class="text-gray-700 dark:text-gray-400">Прізвище</span>
+                <input
+                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                  type="text"
+                  name="last_name"
+                  placeholder="Прізвище"
+                />
+              </label>
+
+              <label class="block text-sm">
+                <span class="text-gray-700 dark:text-gray-400">По Батькові</span>
+                <input
+                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                  type="text"
+                  name="middle_name"
+                  placeholder="По Батькові"
+                />
+              </label>
+
+              <label class="block text-sm">
+                <span class="text-gray-700 dark:text-gray-400">Телефон</span>
+                <input
+                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                  type="text"
+                  name="contact_no"
+                  placeholder="Телефон"
+                />
+              </label>
+              <label class="block text-sm">
+                <span class="text-gray-700 dark:text-gray-400">Адреса</span>
+                <input
+                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                  type="text"
+                  name="address"
+                  placeholder="Адреса"
+                />
+              </label>
+              {% if user_types %}
+                <div class="form-group input-group">
+                  <div class="input-group-prepend mx-auto">
+                    <label class="block text-sm text-gray-700 dark:text-gray-400">Тип облікового запису</label>
+                  </div>
+                  
+                  <select class="custom-select mx-auto block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" id="user_type" name="user_type">
+                    {% for user_type in user_types %}
+                      
+                          <option class="input-group-text mb-0 mt-0 pt-0 pb-0" value="{{ user_type.user_type_id }}">
+                          {{ user_type.user_type_name }}</option>
+                        
+                    {% endfor %}
+                  </select>
+                </div>
+              {% endif %}
+
+              <button
+              id="create-account-btn"
+                class="block w-full px-4 py-2 mt-4 text-sm font-medium leading-5 text-center text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+              >
+                Створити профіль
+              </button>
+
+            </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+    </div>
+  </main>
+
+{% endblock %}

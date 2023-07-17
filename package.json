@@ -1,0 +1,25 @@
+{
+  "name": "hotel",
+  "version": "1.0.0",
+  "description": "fix",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npx tailwindcss -c ./tailwind.config.js -i ./main/static/css/tailwind_config.css -o ./main/static/css/tailwind.css --watch",
+    "build_flowbite": "xcopy /E \"\\node_modules\\flowbite\\dist\\\" \"\\main\\static\\flowbite\\\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@tailwindcss/forms": "^0.5.3",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.23",
+    "tailwindcss": "^3.3.2"
+  },
+  "dependencies": {
+    "color": "^4.2.3",
+    "custom-forms": "^0.0.0",
+    "flowbite": "^1.6.5"
+  }
+}
